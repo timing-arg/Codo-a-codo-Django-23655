@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/alta_persona.css' %}">
+{%endblock%}
+
+{% block title %}Alta de personas{% endblock %}
+{% block section_title %}Alta de personas{% endblock %}
+{% block content %}
+    <h3>Datos de la persona</h3>
+    <form method="post" action="{% url 'alta_persona' %}">
+        {% csrf_token %}
+        {{ alta_persona_form.as_p }}
+        <input type="submit">
+    </form>
+{% endblock %}

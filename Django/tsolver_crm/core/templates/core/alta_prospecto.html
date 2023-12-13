@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/alta_prospecto.css' %}">
+{%endblock%}
+
+{% block title %}Alta de prospectos{% endblock %}
+{% block section_title %}Alta de prospectos{% endblock %}
+{% block content %}
+    <h3>Datos del prospecto</h3>
+    <form method="post" action="{% url 'alta_prospecto' %}">
+        {% csrf_token %}
+        {{ alta_prospecto_form.as_p }}
+        <input type="submit">
+    </form>
+{% endblock %}

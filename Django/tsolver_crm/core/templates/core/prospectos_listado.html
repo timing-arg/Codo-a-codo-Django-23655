@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/prospectos_listado.css' %}">
+{%endblock%}
+
+{% block title %}Listado de prospectos{% endblock %}
+{% block section_title %}Listado de prospectos{% endblock %}
+{% block content %}
+    <h2>2023</h2>
+    <ul>
+        {% for nombre_prospecto in listado_prospectos %}
+            <li>
+                <p>{{ nombre_prospecto.nombre_completo | title }}</p>
+                <p>{{ nombre_prospecto.cliente}}</p>
+                <p>{{ nombre_prospecto.contactado}}</p>
+                <p>{{ nombre_prospecto.cuit}}</p>
+                <p>{{ nombre_prospecto.estado}}</p>
+                <p>{{ nombre_prospecto.fecha_ultimo_contacto}}</p>
+                <p>{{ nombre_prospecto.id}}</p>
+                <p>{{ nombre_prospecto.nombre_fantasia}}</p>
+                <p>{{ nombre_prospecto.numero_prospecto}}</p>
+                <p>{{ nombre_prospecto.presupuesto}}</p>
+                <p>{{ nombre_prospecto.razon_social}}</p>
+                <p>{{ nombre_prospecto.registracion}}</p>
+                <p>{{ nombre_prospecto.rubro}}</p>
+                <p>{{ nombre_prospecto.rubro_id}}</p>
+                <p>{{ nombre_prospecto.subrubro}}</p>
+                <p>{{ nombre_prospecto.subrubro_id}}</p>
+
+            </li>
+        {% empty %}
+            <p>Sin prospectos registrados</p>
+        {% endfor %}
+    </ul>
+
+    {% if cant_registrados > 0 %}
+        <p>cantidad de registrados: {{cant_regisrados}}</p>
+    {% else %}
+        <p>No hay regisrados</p>
+    {% endif %}
+{% endblock %}

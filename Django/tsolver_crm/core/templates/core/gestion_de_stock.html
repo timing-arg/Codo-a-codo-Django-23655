@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/gestion_de_stock.css' %}">
+{%endblock%}
+
+
+{% block title %}Pagina de bienvenida{% endblock %}
+{% block section_title %}{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <h1>Muestra1</h1>    
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <h1>Muestra2</h1>    
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <h1>Muestra3</h1>    
+            </div>
+        </div>
+    </div>
+
+
+
+
+<h2 style="color: white;">Bienvenid@ a tsolcrm <span style="font-size: 70%;">v1.0</span></h2>
+<p style="color: white;">Usuario logueado como: <b>{{ nombre_usuario }}</b></p>
+
+{% if es_instructor %}
+    <p style="color: red;">Rol: Operador</p>
+{% else %}
+    <p style="color: green;">Rol: Supervisor</p>
+{% endif %}
+
+{% filter lower %}
+<p style="color: white;">Día de la fecha: {{ fecha }}</p>
+{% endfilter %}
