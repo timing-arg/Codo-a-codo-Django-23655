@@ -130,3 +130,6 @@ def prospectos_historico_2017(request):
 
 def prospectos_estado(request, estado):
     return HttpResponse(f'Filtrar prospectos por estado: {estado}')
+
+def gestion_de_stock(request, stock):
+    return HttpResponse(f'Filtrar stock: {stock}')

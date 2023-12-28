@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.db.models.fields.related import ManyToManyField
 from django.forms.models import ModelMultipleChoiceField
 from django.http.request import HttpRequest
-from core.models import Estudiante, Docente, Curso, Categoria, Inscripcion
+from core.models import Producto, Persona, Operador, Domicilio, Telefono, Perfil, Prospec, Rubro, Subrubro, Prospecto, Proveedor, Presupuesto, PresupuestoDetalle, Registracion
+
 
 """
 class CacAdminSite(admin.AdminSite):
@@ -19,28 +20,42 @@ class EstudianteAdmin(admin.ModelAdmin):
     list_display_links = ['legajo']
     search_fields = ['apellido']
 
-@admin.register(Curso)
-class CursoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'fecha_inicio')
+#@admin.register(Curso)
+#class CursoAdmin(admin.ModelAdmin):
+#    list_display = ('nombre', 'fecha_inicio')
 
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field == 'estudiantes':
-            kwargs["queryset"] = Estudiante.objects.filter().order_by("apellido")
+#    def formfield_for_manytomany(self, db_field, request, **kwargs):
+#        if db_field == 'estudiantes':
+#            kwargs["queryset"] = Estudiante.objects.filter().order_by("apellido")
 
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
+#        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 """
-sitio_admin = CacAdminSite(name='cacadmin')
-sitio_admin.register(Estudiante, EstudianteAdmin)
+#sitio_admin = CacAdminSite(name='cacadmin')
+#sitio_admin.register(Estudiante, EstudianteAdmin)
+Producto
+Persona
+Operador
+Domicilio
+Telefono
+Perfil
+Prospec
+Rubro
+Subrubro
+Prospecto
+Proveedor
+Presupuesto
+PresupuestoDetalla
+Registracion
 sitio_admin.register(Docente)
 sitio_admin.register(Categoria)
 sitio_admin.register(Inscripcion)
 sitio_admin.register(Curso)
 """
 
-admin.site.register(Estudiante, EstudianteAdmin)
-admin.site.register(Docente)
-admin.site.register(Categoria)
-admin.site.register(Inscripcion)
+#admin.site.register(Estudiante, EstudianteAdmin)
+#admin.site.register(Docente)
+#admin.site.register(Categoria)
+#admin.site.register(Inscripcion)
 #admin.site.register(Curso)

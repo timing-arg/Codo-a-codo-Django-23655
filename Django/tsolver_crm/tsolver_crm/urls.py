@@ -20,10 +20,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD:Django/tsolver_crm/tsolver_crm/urls.py
     path('tsolver_crm/', include('core.urls')),
-=======
-    #path('admin/', sitio_admin.urls),
-    path('aula_virtual/', include('core.urls')),
->>>>>>> 307a084ba1eb3bb45212deb5743bb1cc04dbe4dd:Django/aulavirtual/aulavirtual/urls.py
 ]

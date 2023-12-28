@@ -11,37 +11,37 @@ CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
 # models.ManyToManyField (muchos a muchos)
 # models.OneToOneField (uno a uno)
 
- #class Producto(models.Model):
- #   codigo_de_producto = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
- #   IdArticulo = models.IntegerField(verbose_name="IdArticulo")
- #   IdMaterial = models.IntegerField(verbose_name="IdMaterial")
- #   descripcion = models.CharField(max_length=250, null=True, verbose_name="Descripción del producto")
- #   Formato	= models.CharField(max_length=250, null=True, verbose_name="Formato")
- #   AnchoXLongitud	= models.CharField(max_length=250, null=True, verbose_name="Ancho x longitud")
- #   Ancho = models.IntegerField(verbose_name="Ancho")
- #   Longitud = models.IntegerField(verbose_name="Longitud")
- #   Buje = models.CharField(max_length=250, null=True, verbose_name="Buje")
- #   Codigo = models.CharField(max_length=250, null=True, verbose_name="Codigo")
- #   Minimo = models.IntegerField(verbose_name="Mínimo")
- #   StockMin = models.IntegerField(verbose_name="Stock mínimo")
- #   StockMax = models.IntegerField(verbose_name="Stock máximo")
- #   Existencia = models.IntegerField(verbose_name="Existencia")
- #   TiempoReposicion = models.CharField(max_length=250, null=True, verbose_name="Tiempo de reposición")
- #   moneda = models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
- #   iva = models.IntegerField(verbose_name="IVA")
- #   PrecioVenta	= models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
- #   #Imagen	Objeto OLE
- #   EsAccesorio	= models.CharField(max_length=250, null=True, verbose_name="Es accesorio")
- #   CodigoOrigen = models.CharField(max_length=250, null=True, verbose_name="Código origen")
- #   tipo_de_unidad = models.CharField(max_length=10, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
- #   Utilidad = models.IntegerField(verbose_name="Utilidad")
- #   PrecioCosto = models.IntegerField(verbose_name="Precio de costo")
- #   IdCliente = models.IntegerField(verbose_name="IdCliente")
- #   FechaUltActualiz = models.DateField(null=True, verbose_name="Fecha de última actualización")
+class Producto(models.Model):
+    codigo_de_producto = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
+    IdArticulo = models.IntegerField(verbose_name="IdArticulo")
+    IdMaterial = models.IntegerField(verbose_name="IdMaterial")
+    descripcion = models.CharField(max_length=250, null=True, verbose_name="Descripción del producto")
+    Formato	= models.CharField(max_length=250, null=True, verbose_name="Formato")
+    AnchoXLongitud	= models.CharField(max_length=250, null=True, verbose_name="Ancho x longitud")
+    Ancho = models.IntegerField(verbose_name="Ancho")
+    Longitud = models.IntegerField(verbose_name="Longitud")
+    Buje = models.CharField(max_length=250, null=True, verbose_name="Buje")
+    Codigo = models.CharField(max_length=250, null=True, verbose_name="Codigo")
+    Minimo = models.IntegerField(verbose_name="Mínimo")
+    StockMin = models.IntegerField(verbose_name="Stock mínimo")
+    StockMax = models.IntegerField(verbose_name="Stock máximo")
+    Existencia = models.IntegerField(verbose_name="Existencia")
+    TiempoReposicion = models.CharField(max_length=250, null=True, verbose_name="Tiempo de reposición")
+    moneda = models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
+    iva = models.IntegerField(verbose_name="IVA")
+    PrecioVenta	= models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
+    #Imagen	Objeto OLE
+    EsAccesorio	= models.CharField(max_length=250, null=True, verbose_name="Es accesorio")
+    CodigoOrigen = models.CharField(max_length=250, null=True, verbose_name="Código origen")
+    tipo_de_unidad = models.CharField(max_length=10, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
+    Utilidad = models.IntegerField(verbose_name="Utilidad")
+    PrecioCosto = models.IntegerField(verbose_name="Precio de costo")
+    IdCliente = models.IntegerField(verbose_name="IdCliente")
+    FechaUltActualiz = models.DateField(null=True, verbose_name="Fecha de última actualización")
     #Actualizar	    si/no
- #   StockActual = models.IntegerField(verbose_name="Stock actual")
- #   StockReservado = models.IntegerField(verbose_name="Stock reservado")
- #   StockDisponible	= models.IntegerField(verbose_name="Stock disponible")
+    StockActual = models.IntegerField(verbose_name="Stock actual")
+    StockReservado = models.IntegerField(verbose_name="Stock reservado")
+    StockDisponible	= models.IntegerField(verbose_name="Stock disponible")
 
 
 
@@ -69,7 +69,7 @@ class Persona(models.Model):
 
 
 class Operador(Persona):
-    models.IntegerField(verbose_name="Cantidad")_operador = models.IntegerField(verbose_name="Operador")
+    Numero_operador = models.IntegerField(verbose_name="Operador")
 
 
 # class Contacto(Persona):
@@ -87,11 +87,11 @@ class Domicilio(models.Model):
 
 class Telefono(models.Model):
     tipo = models.CharField(max_length=30, verbose_name="Tipo de Teléfono")
-    models.IntegerField(verbose_name="Cantidad")_telefono = models.CharField(max_length=15, verbose_name="Número de Teléfono")
+    telefono = models.CharField(max_length=15, verbose_name="Número de Teléfono")
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.tipo}: {self.models.IntegerField(verbose_name="Cantidad")_telefono}"
+        return f"{self.tipo} {self.telefono}"
 
 
 class Perfil(models.Model):
@@ -124,33 +124,33 @@ class Rubro(models.Model):
     rubro = models.CharField(max_length=255, verbose_name="Rubro", default=0)
 
 
-class SubRubro(models.Model):
+class Subrubro(models.Model):
     subrubro = models.CharField(max_length=255, verbose_name="Subrubro",default=0)
     rubro = models.ForeignKey(Rubro, on_delete=models.CASCADE)
 
 
 class Prospecto(Prospec):
-    models.IntegerField(verbose_name="Cantidad")_prospecto = models.IntegerField(verbose_name="Prospecto", default=0)
+    prospecto = models.IntegerField(verbose_name="Prospecto", default=0)
     contactado = models.CharField(null=True, max_length=100, verbose_name="Contactado")
     fecha_ultimo_contacto = models.DateField(null=True, verbose_name="Fecha de último contacto")
     cliente = models.IntegerField(null=True, verbose_name="Cliente")
     rubro = models.ForeignKey(Rubro, on_delete=models.CASCADE, default=1)
-    subrubro = models.ForeignKey(SubRubro, on_delete=models.CASCADE, default=1) 
+    subrubro = models.ForeignKey(Subrubro, on_delete=models.CASCADE, default=1) 
 
 
 class Proveedor(Prospec):
-    models.IntegerField(verbose_name="Cantidad")_proveedor = models.IntegerField(verbose_name="Proveedor", default=0)   
+    proveedor = models.IntegerField(verbose_name="Proveedor", default=0)   
 
 
 class Presupuesto(models.Model):
-    models.IntegerField(verbose_name="Cantidad")_presupuesto = models.IntegerField(verbose_name="Presupuesto")
+    presupuesto = models.IntegerField(verbose_name="Presupuesto")
     fecha = models.DateField(verbose_name="Fecha")
     condicion_de_pago = models.CharField(max_length=250, verbose_name="Condición de pago")
     validez = models.CharField(max_length=150, null=True, verbose_name="Validez")
     plazo_de_entrega = models.CharField(max_length=250, null=True, verbose_name="Plazo de entrega")
     tipo_de_cambio = models.CharField(max_length=250, verbose_name="Tipo de cambio")
     observacion = models.CharField(max_length=250, verbose_name="Observación")
-    models.IntegerField(verbose_name="Cantidad")_operador = models.IntegerField(verbose_name="Operador")
+    operador = models.IntegerField(verbose_name="Operador")
     estado_del_presupuesto = models.CharField(max_length=30, verbose_name="Estado del presupuesto")
     contacto = models.CharField(max_length=150, verbose_name="Nombre del contacto")
     fecha_dias_habiles = models.DateField(verbose_name="Fecha días hábiles")
@@ -169,13 +169,13 @@ class PresupuestoDetalle(models.Model):
     proveedor_ppto = models.IntegerField(verbose_name="Provvedor ppto.")
     fecha_ppto_proveedor = models.DateField(verbose_name="Fecha ppto.")
     tipo_de_cambio = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Tipo de cbio ppto.")
-    presupuesto_models.IntegerField(verbose_name="Cantidad") = models.ForeignKey (Presupuesto, on_delete=models.CASCADE)
+    presupuesto = models.ForeignKey (Presupuesto, on_delete=models.CASCADE)
 
 
 
 class Registracion(models.Model):
     fecha = models.DateField(verbose_name="Fecha de registracion")
-    models.IntegerField(verbose_name="Cantidad")_prospecto = models.ForeignKey(Prospecto, on_delete=models.CASCADE)
+    prospecto = models.ForeignKey(Prospecto, on_delete=models.CASCADE)
 
 
 
