@@ -11,37 +11,49 @@ CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
 # models.ManyToManyField (muchos a muchos)
 # models.OneToOneField (uno a uno)
 
+class Articulo(models.Model):
+    idarticulo = models.AutoField(primary_key=True, verbose_name="Código de articulo")
+    articulo_tipo = models.CharField(max_length=50, null=True, verbose_name="Familia")
+    articulo_descripcion = models.CharField(max_length=255, null=True, verbose_name="Descripción del artículo")
+    no_vigente = models.BooleanField(default=False)
+
+
+class Material(models.Model):
+    idmaterial = models.AutoField(primary_key=True, verbose_name="Código de material")
+    material = models.CharField(max_length=255, null=True, verbose_name="Descripción del material")
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+
+
 class Producto(models.Model):
-    codigo_de_producto = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
-    IdArticulo = models.IntegerField(verbose_name="IdArticulo")
-    IdMaterial = models.IntegerField(verbose_name="IdMaterial")
-    descripcion = models.CharField(max_length=250, null=True, verbose_name="Descripción del producto")
-    Formato	= models.CharField(max_length=250, null=True, verbose_name="Formato")
-    AnchoXLongitud	= models.CharField(max_length=250, null=True, verbose_name="Ancho x longitud")
-    Ancho = models.IntegerField(verbose_name="Ancho")
-    Longitud = models.IntegerField(verbose_name="Longitud")
-    Buje = models.CharField(max_length=250, null=True, verbose_name="Buje")
-    Codigo = models.CharField(max_length=250, null=True, verbose_name="Codigo")
-    Minimo = models.IntegerField(verbose_name="Mínimo")
-    StockMin = models.IntegerField(verbose_name="Stock mínimo")
-    StockMax = models.IntegerField(verbose_name="Stock máximo")
-    Existencia = models.IntegerField(verbose_name="Existencia")
-    TiempoReposicion = models.CharField(max_length=250, null=True, verbose_name="Tiempo de reposición")
+    codigo_de_producto = models.CharField(primary_key=True, max_length=13, null=False, verbose_name="Código de producto")
+    descripcion = models.CharField(max_length=250, null=False, verbose_name="Descripción del producto")
+    formato	= models.CharField(max_length=250, null=True, verbose_name="Formato")
+    anchoXlongitud	= models.CharField(max_length=250, null=True, verbose_name="Ancho x longitud")
+    ancho = models.IntegerField(verbose_name="Ancho")
+    longitud = models.IntegerField(verbose_name="Longitud")
+    buje = models.CharField(max_length=250, null=True, verbose_name="Buje")
+    codigo = models.CharField(max_length=250, null=True, verbose_name="Código")
+    minimo = models.IntegerField(verbose_name="Mínimo")
+    stockmin = models.IntegerField(verbose_name="Stock mínimo")
+    stockmax = models.IntegerField(verbose_name="Stock máximo")
+    existencia = models.IntegerField(verbose_name="Existencia")
+    tiempo_de_reposicion = models.CharField(max_length=250, null=True, verbose_name="Tiempo de reposición")
     moneda = models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
     iva = models.IntegerField(verbose_name="IVA")
-    PrecioVenta	= models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
-    #Imagen	Objeto OLE
-    EsAccesorio	= models.CharField(max_length=250, null=True, verbose_name="Es accesorio")
-    CodigoOrigen = models.CharField(max_length=250, null=True, verbose_name="Código origen")
+    precio_de_venta	= models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
+    es_accesorio	= models.CharField(max_length=250, null=True, verbose_name="Es accesorio")
+    codigo_de_origen = models.CharField(max_length=250, null=True, verbose_name="Código de origen")
     tipo_de_unidad = models.CharField(max_length=10, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
-    Utilidad = models.IntegerField(verbose_name="Utilidad")
-    PrecioCosto = models.IntegerField(verbose_name="Precio de costo")
-    IdCliente = models.IntegerField(verbose_name="IdCliente")
-    FechaUltActualiz = models.DateField(null=True, verbose_name="Fecha de última actualización")
-    #Actualizar	    si/no
-    StockActual = models.IntegerField(verbose_name="Stock actual")
-    StockReservado = models.IntegerField(verbose_name="Stock reservado")
-    StockDisponible	= models.IntegerField(verbose_name="Stock disponible")
+    utilidad = models.IntegerField(verbose_name="Utilidad")
+    precio_de_costo = models.IntegerField(verbose_name="Precio de costo")
+    idcliente = models.IntegerField(verbose_name="IdCliente")
+    fecha_ultima_actualizacion = models.DateField(null=True, verbose_name="Fecha de última actualización")
+    stockactual = models.IntegerField(verbose_name="Stock actual")
+    stockreservado = models.IntegerField(verbose_name="Stock reservado")
+    stockdisponible	= models.IntegerField(verbose_name="Stock disponible")
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE)
+
 
 
 
@@ -53,11 +65,6 @@ class Persona(models.Model):
     documento = models.CharField(max_length=11, null=True, verbose_name="Documento número")
     firma = models.ImageField(upload_to='firmas/', null=True, blank=True, verbose_name="Firma")
     
-    #def clean_cuit(self):
-    #    if not (0 < self.cleaned_data['models.IntegerField(verbose_name="Cantidad")_documento'] <= 99999999999):
-    #        raise ValidationError("El documento debe ser un models.IntegerField(verbose_name="Cantidad") positivo de 11 digitos válidos")
-    #    return self.cleaned_data['models.IntegerField(verbose_name="Cantidad")_documento']
-
     def clean(self):
         if self.firma:
             width, height = get_image_dimensions(self.firma)
@@ -69,7 +76,7 @@ class Persona(models.Model):
 
 
 class Operador(Persona):
-    Numero_operador = models.IntegerField(verbose_name="Operador")
+    numero_operador = models.IntegerField(verbose_name="Operador")
 
 
 # class Contacto(Persona):
@@ -77,21 +84,46 @@ class Operador(Persona):
 
 
 class Domicilio(models.Model):
-    tipo = models.CharField(max_length=30, verbose_name="Tipo de Domicilio")
+    DOMICILIO_LEGAL = 'Legal'
+    DOMICILIO_ENTREGA = 'Entrega'
+
+    TIPO_DOMICILIO_CHOICES = [
+        (DOMICILIO_LEGAL, 'Domicilio Legal'),
+        (DOMICILIO_ENTREGA, 'Domicilio de Entrega'),
+    ]
+
+    tipo = models.CharField(max_length=30, choices=TIPO_DOMICILIO_CHOICES, verbose_name="Tipo de Domicilio")
     direccion = models.CharField(max_length=100, verbose_name="Dirección")
+    numero_entrega = models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de Entrega")
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.tipo}: {self.direccion}"
+        if self.tipo == self.DOMICILIO_ENTREGA and self.numero_entrega is not None:
+            return f"Domicilio de Entrega {self.numero_entrega}: {self.direccion}"
+        else:
+            return f"{self.get_tipo_display()}: {self.direccion}"
+
 
 
 class Telefono(models.Model):
-    tipo = models.CharField(max_length=30, verbose_name="Tipo de Teléfono")
-    telefono = models.CharField(max_length=15, verbose_name="Número de Teléfono")
+    TELEFONO = 'Telefono'
+    WHATSAPP = 'WhatsApp'
+    TELEGRAM = 'Telegram'
+
+    TIPO_TELEFONO_CHOICES = [
+        (TELEFONO, 'Teléfono'),
+        (WHATSAPP, 'WhatsApp'),
+        (TELEGRAM, 'Telegram'),
+        # Agrega más opciones según sea necesario
+    ]
+
+    tipo = models.CharField(max_length=30, choices=TIPO_TELEFONO_CHOICES, verbose_name="Tipo de Teléfono")
+    numero = models.CharField(max_length=15, verbose_name="Número de Teléfono")
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.tipo} {self.telefono}"
+        return f"{self.get_tipo_display()}: {self.numero}"
+
 
 
 class Perfil(models.Model):
