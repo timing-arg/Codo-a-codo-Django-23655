@@ -106,8 +106,8 @@ class Domicilio(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_DOMICILIO_CHOICES, verbose_name="Tipo de Domicilio")
     direccion = models.CharField(max_length=100, verbose_name="Dirección")
     calle = models.CharField(max_length=100, verbose_name="Calle")
-    numero = models.PositiveIntegerField(max_length=100, verbose_name="Número")
-    piso = models.IntegerField(max_length=100, verbose_name="Piso")
+    numero = models.PositiveIntegerField(verbose_name="Número")
+    piso = models.IntegerField(verbose_name="Piso")
     puerta = models.CharField(max_length=100, verbose_name="Puerta")
     codigo_postal = models.CharField(max_length=100, verbose_name="Código postal")
     localidad = models.CharField(max_length=100, verbose_name="Localidad")
@@ -250,35 +250,35 @@ class NotaPedido(models.Model):
     oc = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
     operador = models.IntegerField(verbose_name="Operador")
     hora_del_pedido = models.TimeField(verbose_name="Hora del pedido")
-    tipo_de_cambio = models.DecimalField(decimal_places=2,verbose_name="Tipo de cambio")
+    tipo_de_cambio = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Tipo de cambio")
     condicion_de_pago = models.CharField(max_length=250, verbose_name="Condición de pago")
     remito = models.BooleanField(default=False, verbose_name="¿Tiene remito?")    
     factura = models.BooleanField(default=False, verbose_name="¿Tiene factura?")
-    factura_numero = models.CharField(verbose_name="Factura número")
+    factura_numero = models.CharField(max_length=30, verbose_name="Factura número")
     factura_fecha = models.DateField(verbose_name="Fecha de factura")
-    factura_usuario = models.CharField(verbose_name="Factura usuario")
+    factura_usuario = models.CharField(max_length=30, verbose_name="Factura usuario")
     recibo_numero = models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de recibo")
     recibo_fecha = models.DateField(verbose_name="Fecha de recibo")
-    recibo_importe = models.DecimalField(decimal_places=2,verbose_name="Importe del recibo")
-    recibo_usuario = models.CharField(verbose_name="Recibo usuario")
+    recibo_importe = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Importe del recibo")
+    recibo_usuario = models.CharField(max_length=30,verbose_name="Recibo usuario")
     facturado = models.BooleanField(default=False, verbose_name="¿Facturado?")
-    estado = models.CharField(verbose_name="Estado")
+    estado = models.CharField(max_length=30,verbose_name="Estado")
     estado_fecha = models.DateField(verbose_name="Fecha de estado")
-    estado_usuario = models.CharField(verbose_name="Estado usuario")
+    estado_usuario = models.CharField(max_length=30, verbose_name="Estado usuario")
     cliente = models.ManyToManyField(Prospecto)
 
 
 
 
 class NotaPedidoDetalle(models.Model):
-    item
-    cliente
+    item = models.PositiveIntegerField(verbose_name="Ítem")
+    cliente = models.CharField(max_length=10, null=True, verbose_name="Código de producto")
     producto = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
     descripcion_personalizada = models.CharField(max_length=250, null=True, verbose_name="Descripción personalizada")
-    cantidad_en_millares = models.DecimalField(decimal_places=2,verbose_name="Cantidad en millares")
-    cantidad_x_rollo = models.DecimalField(decimal_places=2,verbose_name="Cantidad por rollo")
-    cantidad_de_rollos = models.DecimalField(decimal_places=2,verbose_name="Cantidad de rollos")
-    ancho_x_alto = models.DecimalField(decimal_places=2,verbose_name="Ancho por alto")
+    cantidad_en_millares = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Cantidad en millares")
+    cantidad_x_rollo = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Cantidad por rollo")
+    cantidad_de_rollos = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Cantidad de rollos")
+    ancho_x_alto = models.DecimalField(max_digits=30, decimal_places=2,verbose_name="Ancho por alto")
     bandas = models.PositiveIntegerField(null=True, blank=True, verbose_name="Bandas")
     material = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
     buje = models.CharField(max_length=13, null=True, verbose_name="Código de producto")
@@ -301,21 +301,11 @@ class NotaPedidoDetalle(models.Model):
             default="p/millar",
             verbose_name="Tipo de unidad"
     )
-    tipo_de_unidad = models.CharField(
-        max_length=10,
-        choices=[
-            ("p/millar", "millar"),
-            ("p/unidad", "unidad"),
-            ("precio", "precio")
-            ],
-            default="p/millar",
-            verbose_name="Tipo de unidad"
-    )
-    precio = models.DecimalField(decimal_places=2,verbose_name="Precio")
-    iva_porciento = models.DecimalField(decimal_places=2,verbose_name="IVA %")
-    importe = models.DecimalField(decimal_places=2,verbose_name="Importe")
-    iva_importe = models.DecimalField(decimal_places=2,verbose_name="IVA importe")
-    total = models.DecimalField(decimal_places=2,verbose_name="Total")
+    precio = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Precio")
+    iva_porciento = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="IVA %")
+    importe = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Importe")
+    iva_importe = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="IVA importe")
+    total = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Total")
     observacion = models.CharField(max_length=250, null=True, verbose_name="Observación")
     estado = models.CharField(max_length=13, null=True, verbose_name="Estado")
     estado_fecha = models.CharField(max_length=13, null=True, verbose_name="Estado fecha")
