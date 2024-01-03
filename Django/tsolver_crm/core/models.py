@@ -88,6 +88,7 @@ class Persona(models.Model):
 
 class Operador(Persona):
     numero_operador = models.PositiveIntegerField(verbose_name="Operador")
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
 
 # class Contacto(Persona):

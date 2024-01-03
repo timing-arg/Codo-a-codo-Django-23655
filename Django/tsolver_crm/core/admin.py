@@ -5,14 +5,15 @@ from django.forms.models import ModelMultipleChoiceField
 from django.http.request import HttpRequest
 from core.models import Producto, Persona, Operador, Domicilio, Telefono, Perfil, Prospec, Rubro, Subrubro, Prospecto, Proveedor, Presupuesto, PresupuestoDetalle, Registracion
 
+admin.site.register(Persona)
 
-"""
-class CacAdminSite(admin.AdminSite):
-    site_header = "Sistema de Administración del Aula virutal 2.0"
+
+class TsolverAdminSite(admin.AdminSite):
+    site_header = "Sistema de Administración de tisol 1.0"
     site_title = "Administración para superusers"
     index_title = "Administración del sitio"
     empty_value_display = "vacio"
-"""
+
 
 class EstudianteAdmin(admin.ModelAdmin):
     list_display = ( 'legajo', 'nombre', 'apellido')
@@ -20,6 +21,11 @@ class EstudianteAdmin(admin.ModelAdmin):
     list_display_links = ['legajo']
     search_fields = ['apellido']
 
+class PersonaAdmin(admin.ModelAdmin):
+    list_display = ( 'tipo_documento', 'documento', 'nombre', 'apellido')
+    list_editable = ('apellido', 'nombre')
+    list_display_links = ['legajo']
+    search_fields = ['apellido']
 #@admin.register(Curso)
 #class CursoAdmin(admin.ModelAdmin):
 #    list_display = ('nombre', 'fecha_inicio')
@@ -31,28 +37,26 @@ class EstudianteAdmin(admin.ModelAdmin):
 #        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-"""
-#sitio_admin = CacAdminSite(name='cacadmin')
-#sitio_admin.register(Estudiante, EstudianteAdmin)
-Producto
-Persona
-Operador
-Domicilio
-Telefono
-Perfil
-Prospec
-Rubro
-Subrubro
-Prospecto
-Proveedor
-Presupuesto
-PresupuestoDetalla
-Registracion
-sitio_admin.register(Docente)
-sitio_admin.register(Categoria)
-sitio_admin.register(Inscripcion)
-sitio_admin.register(Curso)
-"""
+
+sitio_admin = TsolverAdminSite(name='administrador')
+sitio_admin.register(Persona, PersonaAdmin)
+sitio_admin.register(Producto, ProductoAdmin)
+sitio_admin.register(Operador, OperadorAdmin)
+sitio_admin.register(Domicilio, DomicilioAdmin)
+sitio_admin.register(Telefono, TelefonoAdmin)
+sitio_admin.register(Perfil, PerfilAdmin)
+sitio_admin.register(Prospec, ProspecAdmin)
+sitio_admin.register(Rubro, RubroAdmin)
+sitio_admin.register(Subrubro, SubrubroAdmin) 
+sitio_admin.register(Prospecto, SubrubroAdmin)
+sitio_admin.register(Proveedor, ProveedorAdmin)
+sitio_admin.register(Presupuesto, PresupuestoAdmin) 
+sitio_admin.register(PresupuestoDetalla, PresupuestoDetallaAdmin)
+sitio_admin.register(Registracion, RegistracionAdmin)
+sitio_admin.register(Docente, DocenteAdmin)
+sitio_admin.register(Categoria, CategoriaAdmin)
+sitio_admin.register(Inscripcion, InscripcionAdmin)
+
 
 #admin.site.register(Estudiante, EstudianteAdmin)
 #admin.site.register(Docente)

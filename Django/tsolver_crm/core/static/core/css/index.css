@@ -1,4 +1,4 @@
-.header {width: 100%;
+/*.header {width: 100%;
     background-image: linear-gradient(to rigth rgb(175, 173, 173) );
 }
 /*.navbar-brand{color: white!important;}
@@ -6,9 +6,7 @@
 .nav-link:hover{color: rgb(255,0,212)!important;}*/
 
 
-
-
-@media(max-width:668px){
+/*@media(max-width:668px){
     .nav-link{text-align: center;}
 }
 

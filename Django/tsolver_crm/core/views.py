@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ContactoForm, AltaPersonaForm , AltaProspectoForm
 from .models import Prospecto
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.db import IntegrityError
+
 
 
 def index(request):
