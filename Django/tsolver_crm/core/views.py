@@ -6,12 +6,13 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import ContactoForm, AltaPersonaForm , AltaProspectoForm
-from .models import Prospecto
+from .models import Persona, Prospecto
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
 
-
+from rest_framework import viewsets, permissions
+from .serializers import PersonaSerializer
 
 def index(request):
     context = {
@@ -139,3 +140,7 @@ def prospectos_estado(request, estado):
 
 def gestion_de_stock(request, stock):
     return HttpResponse(f'Filtrar stock: {stock}')
+
+class PersonaViewSet(viewsets.ModelViewSet):
+    queryset = Persona.objects.all()
+    serializer_class = PersonaSerializer

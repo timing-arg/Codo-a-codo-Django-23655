@@ -64,10 +64,10 @@
         </div>
         <div class="actions">
             {% if not user.is_authenticated %}
-               <!--a href="{% url 'login' %}">Login</a>
+               <a href="{% url 'login' %}">Login</a>
             {% else %}
                <p>{{user.username}}</p>
-               <a href="{% url 'logout' %}"-->
+               <a href="{% url 'logout' %}">
             {% endif %}
         </div>
     </header>
