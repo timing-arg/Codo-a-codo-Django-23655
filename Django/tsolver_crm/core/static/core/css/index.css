@@ -1,9 +1,9 @@
-/*.header {width: 100%;
+*.header {width: 100%;
     background-image: linear-gradient(to rigth rgb(175, 173, 173) );
 }
-/*.navbar-brand{color: white!important;}
-.nav-link{color: white!important;}
-.nav-link:hover{color: rgb(255,0,212)!important;}*/
+*.navbar-brand{color: rgb(7, 7, 7)!important;}
+.nav-link{color: rgb(5, 5, 5)!important;}
+.nav-link:hover{color: rgb(255,0,212)!important;}
 
 
 /*@media(max-width:668px){

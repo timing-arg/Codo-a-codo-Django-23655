@@ -1,20 +1,69 @@
 {% extends "core/base.html" %}
+{% block title %}Gestión de Stock{% endblock %}
 {% load static %}
-
 {% block extra_css%}
     <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
 {%endblock%}
 
 
-{% block title %}Pagina de bienvenida{% endblock %}
+
 {% block section_title %}{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestión de stock</h2>
+        <div class="card">
+            <div class="card-body">
+               <form action="" method="POST">
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" name="textCodigo" class="form-control" placehlder="Código" 
+                            minlength="13" maxlength="13" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDescripcion" name="textDescripcion" class="form-control" placehlder="Descripción" 
+                            maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nunStock" name="nunStock" class="form-control" 
+                            min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button> 
+                    </div>               
+                </form> 
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h3>Listado de productos</h3>
+        <div class="table-responsive py-2">
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in productos %}
+                    <tr>
+                        <td>{{c.codigo_producto}}</td>
+                        <td>{{c.descripcion}}</td>
+                        <td>{{c.stock}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
-
-
-
-<h2 style="color: white;">Bienvenid@ a tsolcrm <span style="font-size: 70%;">v1.0</span></h2>
-<p style="color: white;">Usuario logueado como: <b>{{ nombre_usuario }}</b></p>
+<h4 style="color: rgb(7, 7, 7);">Bienvenid@ a tsolcrm <span style="font-size: 70%;">v1.0</span></h4>
+<p style="color: rgb(7, 7, 7);">Usuario logueado como: <b>{{ nombre_usuario }}</b></p>
 
 {% if es_instructor %}
     <p style="color: red;">Rol: Operador</p>
