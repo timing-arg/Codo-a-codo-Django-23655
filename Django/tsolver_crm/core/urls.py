@@ -2,6 +2,7 @@ from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from . import views
+from .views import actualizar_stock  # Ajusta la importación según tu estructura de carpetas
 
 router = DefaultRouter()
 router.register(r'Persona', views.PersonaViewSet, basename='Persona')
@@ -25,5 +26,14 @@ urlpatterns = [
     path('gestion/stock', views.gestion_de_stock, name="gestion_de_stock"),
 
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
+    path('actualizar_stock/', actualizar_stock, name='actualizar_stock'),
+    #----productos--------------------------------------------------------------------------------------------------
+    path('crear_producto/',views.crear_producto, name='crear_producto'),
+    path('editar_producto/<str:codigo_de_producto>/', views.editar_producto, name='editar_producto'),
+    path('eliminar_producto/<str:codigo_de_producto>/',views.eliminar_producto, name='eliminar_producto'),
+    path('seleccionar_producto/',views.seleccionar_producto, name='seleccionar_producto'),
+    path('ver_productos/', views.ver_productos, name='ver_productos'),
+
+
 
 ]

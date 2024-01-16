@@ -1,0 +1,205 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/ver_productos.css' %}">
+{%endblock%}
+
+{% block title %}Productos{% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+    <h1>Productos existentes</h1>
+    <ul>
+        {% for producto in core_productos %}
+
+        <div class="container-fluid tex-center bg-secundary">
+            <div class="row ">
+                <div class="col-1 border border-white text-center">
+                    Código de producto
+                </div>
+                <div class="col-5 border border-white text-center">
+                    Descripción
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Formato
+                </div>   
+                <div class="col-1 border border-white text-center">
+                    Ancho x longitud
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    Ancho
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    Longitud
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    Buje
+                </div> 
+            </div>     
+
+            <div class="row ">
+                <div class="col-1 border border-white">
+                    {{ producto.codigo_de_producto }}
+                </div>
+                <div class="col-5 border border-white">
+                    {{ producto.descripcion }}
+                </div>
+                <div class="col-1 border border-white text-center">
+                    {{ producto.formato }}
+                </div>   
+                <div class="col-1 border border-white text-center">
+                    {{ producto.anchoXlongitud }}
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    {{ producto.ancho }}
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.longitud }}
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.buje }}
+                </div>  
+            </div>    
+
+            <div class="row ">
+                <div class="col-1 border border-white text-center">
+                    Código
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Cantidad mínima
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Stock mínimo
+                </div>   
+                <div class="col-1 border border-white text-center">
+                    Stock máximo
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    Vida útil en meses
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    Tiempo de reposición
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    Moneda
+                </div>
+                <div class="col-1 border border-white text-center">
+                    IVA porcentaje
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    Precio de venta
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    ¿es accesorio?
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    Código anterior
+                </div>
+            </div>                     
+
+            <div class="row ">
+                <div class="col-1 border border-white">
+                    {{ producto.codigo }}
+                </div>
+                <div class="col-1 border border-white">
+                    {{ producto.minimo }}
+                </div>
+                <div class="col-1 border border-white text-center">
+                    {{ producto.stockmin }}
+                </div>   
+                <div class="col-1 border border-white text-center">
+                    {{ producto.stockmax }}
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    {{ producto.existencia }}
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.tiempo_de_reposicion }}
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.moneda }}
+                </div>  
+                <div class="col-1 border border-white text-center">
+                    {{ producto.iva }}
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    {{ producto.precio_de_venta }}
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.es_accesorio }}
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.codigo_de_origen }}
+                </div>                
+            </div>
+            <div class="row ">
+                <div class="col-1 border border-white text-center">
+                    Tipo de unidad
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Utilidad
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Precio de costo
+                </div>   
+                <div class="col-1 border border-white text-center">
+                    Cliente
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    Fecha de actualización
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    Stock actual
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    Stock reservado
+                </div>
+                <div class="col-1 border border-white text-center">
+                    Stock disponible
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    Código de artículo
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    Código de material
+                </div>                     
+            </div>                     
+
+            <div class="row ">
+                <div class="col-1 border border-white">
+                    {{ producto.tipo_de_unidad }}
+                </div>
+                <div class="col-1 border border-white">
+                    {{ producto.utilidad }}
+                </div>
+                <div class="col-1 border border-white text-center">
+                    {{ producto.precio_de_costo }}
+                </div>
+                <div class="col-1 border border-white text-center">
+                    {{ producto.idcliente }}
+                </div>                               
+                <div class="col-1 border border-white text-center">
+                    {{ producto.fecha_ultima_actualizacion }}
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    {{ producto.stockactual }}
+                </div>     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.stockreservado }}
+                </div>                     
+                <div class="col-1 border border-white text-center">
+                    {{ producto.stockdisponible }}
+                </div>  
+                <div class="col-1 border border-white text-center">
+                    {{ producto.articulo_id }}
+                </div>            
+                <div class="col-1 border border-white text-center">
+                    {{ producto.material_id }}
+                </div>     
+            </div>
+        </div>
+    </ul>    
+        {% empty %}
+            <p>Sin productos registrados</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

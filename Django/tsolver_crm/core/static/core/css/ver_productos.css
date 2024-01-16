@@ -1,0 +1,9 @@
+.row > div{
+    padding: 10px;
+    background-color: aqua;
+    border: 2px solid coral;
+}
+
+.container{
+    border: 2px solid red;
+}

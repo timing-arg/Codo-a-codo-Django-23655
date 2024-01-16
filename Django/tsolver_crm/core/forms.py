@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
+from .models import Producto
 import re
 
 CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
@@ -77,3 +78,13 @@ class Prospecto(forms.Form):
     cliente = forms.CharField(label="Cliente")
     rubro = forms.CharField(label="Rubro")
     subrubro = forms.CharField(label="SubRubro")
+
+class CrearProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = '__all__'
+
+class ActualizarStockForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['codigo_de_producto', 'stockactual', 'stockreservado', 'stockdisponible']

@@ -46,7 +46,7 @@ class Producto(models.Model):
     tipo_de_unidad = models.CharField(max_length=10, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
     utilidad = models.IntegerField(verbose_name="Utilidad")
     precio_de_costo = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Precio de costo")
-    idcliente = models.IntegerField(verbose_name="IdCliente")
+    idcliente = models.IntegerField(null=True, verbose_name="IdCliente")
     fecha_ultima_actualizacion = models.DateField(null=True, verbose_name="Fecha de última actualización")
     stockactual = models.IntegerField(verbose_name="Stock actual")
     stockreservado = models.IntegerField(verbose_name="Stock reservado")
