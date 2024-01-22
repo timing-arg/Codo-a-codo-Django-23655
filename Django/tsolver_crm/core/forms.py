@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
-from .models import Producto
+from .models import Familia, Articulo, Material, Producto
 import re
 
 CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'

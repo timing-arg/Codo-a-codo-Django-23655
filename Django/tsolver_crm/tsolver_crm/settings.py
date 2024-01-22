@@ -85,6 +85,7 @@ DATABASES = {
         "PORT": "3306",
     }
 }
+# superuser: admin psw admin 22/1/2024
 
 
 # Password validation

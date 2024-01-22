@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
@@ -11,48 +12,63 @@ CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
 # models.ManyToManyField (muchos a muchos)
 # models.OneToOneField (uno a uno)
 
+class Familia(models.Model):
+    idfamilia = models.AutoField(primary_key=True, verbose_name="Código de familia")
+    nombre = models.CharField(max_length=250, null=False, blank=False, unique=True, default='FamiliaDefault', verbose_name="Descripción de la familia")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
+
 class Articulo(models.Model):
     idarticulo = models.AutoField(primary_key=True, verbose_name="Código de articulo")
-    articulo_tipo = models.CharField(max_length=50, null=True, verbose_name="Familia")
-    articulo_descripcion = models.CharField(max_length=255, null=True, verbose_name="Descripción del artículo")
+    articulo_descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, default='ArticuloDefault', verbose_name="Descripción del artículo")
     vigente = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    familia = models.ForeignKey (Familia, on_delete=models.CASCADE, default=1)    
+    
+
 
 
 class Material(models.Model):
     idmaterial = models.AutoField(primary_key=True, verbose_name="Código de material")
-    material = models.CharField(max_length=255, null=True, verbose_name="Descripción del material")
-    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    material = models.CharField(max_length=250, null=False, blank=False, unique=True, default='MaterialDefault', verbose_name="Descripción del material")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, default=1)
+
+
 
 
 class Producto(models.Model):
-    codigo_de_producto = models.CharField(primary_key=True, max_length=13, null=False, verbose_name="Código de producto")
-    descripcion = models.CharField(max_length=250, null=False, verbose_name="Descripción del producto")
-    formato	= models.CharField(max_length=250, null=True, verbose_name="Formato")
-    anchoXlongitud	= models.CharField(max_length=250, null=True, verbose_name="Ancho x longitud")
-    ancho = models.IntegerField(verbose_name="Ancho")
-    longitud = models.IntegerField(verbose_name="Longitud")
-    buje = models.CharField(max_length=250, null=True, verbose_name="Buje")
-    codigo = models.CharField(max_length=250, null=True, verbose_name="Código")
-    minimo = models.IntegerField(verbose_name="Mínimo")
-    stockmin = models.IntegerField(verbose_name="Stock mínimo")
-    stockmax = models.IntegerField(verbose_name="Stock máximo")
-    existencia = models.IntegerField(verbose_name="Existencia")
-    tiempo_de_reposicion = models.CharField(max_length=250, null=True, verbose_name="Tiempo de reposición")
-    moneda = models.CharField(max_length=3, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
-    iva = models.IntegerField(verbose_name="IVA")
-    precio_de_venta	= models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Precio de venta")
-    es_accesorio	= models.CharField(max_length=250, null=True, verbose_name="Es accesorio")
-    codigo_de_origen = models.CharField(max_length=250, null=True, verbose_name="Código de origen")
-    tipo_de_unidad = models.CharField(max_length=10, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
-    utilidad = models.IntegerField(verbose_name="Utilidad")
-    precio_de_costo = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Precio de costo")
-    idcliente = models.IntegerField(null=True, verbose_name="IdCliente")
+    codigo_de_producto = models.CharField(primary_key=True, max_length=13, verbose_name="Código de producto")
+    descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, default='ProductoDefault', verbose_name="Descripción del producto")
+    formato	= models.CharField(max_length=250, null=True, blank=True, verbose_name="Formato")
+    anchoXlongitud	= models.CharField(max_length=250, null=True, blank=False, verbose_name="Ancho x longitud")
+    ancho = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, verbose_name="Ancho")
+    longitud = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, verbose_name="Longitud")
+    buje = models.CharField(max_length=250, null=True, blank=False, verbose_name="Buje")
+    codigo = models.CharField(max_length=250, null=True, blank=False, verbose_name="Código")
+    minimo = models.IntegerField(null=True, blank=False, verbose_name="Mínimo")
+    stockmin = models.IntegerField(null=True, blank=False, verbose_name="Stock mínimo")
+    stockmax = models.IntegerField(null=True, blank=False, verbose_name="Stock máximo")
+    existencia = models.IntegerField(null=True, blank=False, verbose_name="Existencia")
+    tiempo_de_reposicion = models.CharField(max_length=250, null=True, blank=False, verbose_name="Tiempo de reposición")
+    moneda = models.CharField(max_length=3, null=False, blank=True, choices=[("USD", "u$s"), ("ARS", "$")], default="USD", verbose_name="Moneda")
+    iva = models.IntegerField(null=False, blank=True, verbose_name="IVA")
+    precio_de_venta	= models.DecimalField(null=True, blank=False, max_digits=10, decimal_places=2,verbose_name="Precio de venta")
+    es_accesorio = models.CharField(max_length=250, null=True, blank=False, verbose_name="Es accesorio")
+    codigo_de_origen = models.CharField(max_length=250, null=True, blank=False, verbose_name="Código de origen")
+    tipo_de_unidad = models.CharField(max_length=10, null=False, blank=True, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
+    utilidad = models.IntegerField(null=True, blank=False, verbose_name="Utilidad")
+    precio_de_costo = models.DecimalField(null=True, blank=False, max_digits=10, decimal_places=2,verbose_name="Precio de costo")
+    idcliente = models.IntegerField(null=False, blank=False, verbose_name="IdCliente")
     fecha_ultima_actualizacion = models.DateField(null=True, verbose_name="Fecha de última actualización")
-    stockactual = models.IntegerField(verbose_name="Stock actual")
-    stockreservado = models.IntegerField(verbose_name="Stock reservado")
-    stockdisponible	= models.IntegerField(verbose_name="Stock disponible")
-    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
-    material = models.ForeignKey(Material, on_delete=models.CASCADE)
+    stockactual = models.IntegerField(null=True, blank=False, verbose_name="Stock actual")
+    stockreservado = models.IntegerField(null=True, blank=False, verbose_name="Stock reservado")
+    stockdisponible	= models.IntegerField(null=True, blank=False, verbose_name="Stock disponible")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, default=1)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE, default=1)
 
 
 
@@ -75,6 +91,7 @@ class Persona(models.Model):
     )
     documento = models.CharField(max_length=11, null=True, verbose_name="Documento número")
     firma = models.ImageField(upload_to='firmas/', null=True, blank=True, verbose_name="Firma")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     
     def clean(self):
         if self.firma:
@@ -84,6 +101,8 @@ class Persona(models.Model):
 
     #class Meta:
     #    abstract = True
+
+
 
 
 class Operador(Persona):
@@ -119,6 +138,7 @@ class Domicilio(models.Model):
     provincia = models.CharField(max_length=20, verbose_name="Provincia")
     pais = models.CharField(max_length=100, verbose_name="Dirección")
     numero_domicilio_de_entrega = models.PositiveIntegerField(null=True, blank=True, verbose_name="Número de Entrega")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -126,6 +146,7 @@ class Domicilio(models.Model):
             return f"Domicilio de Entrega {self.numero_entrega}: {self.direccion}"
         else:
             return f"{self.get_tipo_display()}: {self.direccion}"
+
 
 
 
@@ -143,6 +164,7 @@ class Telefono(models.Model):
 
     tipo = models.CharField(max_length=30, choices=TIPO_TELEFONO_CHOICES, verbose_name="Tipo de Teléfono")
     numero = models.CharField(max_length=15, verbose_name="Número de Teléfono")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -150,18 +172,22 @@ class Telefono(models.Model):
 
 
 
+
 class Perfil(models.Model):
     informacion_adicional = models.TextField(verbose_name="Información Adicional")
     persona = models.OneToOneField(Persona, on_delete=models.CASCADE)
-
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"Perfil de {self.persona}"
+
+
 
 
 class Prospec(models.Model):
     razon_social = models.CharField(max_length=30, verbose_name="Razón Social", default=0)
     nombre_fantasia = models.CharField(max_length=30, verbose_name="Nombre de Fantasía", default=0)
     estado = models.CharField(max_length=10, verbose_name="Estado", default=0)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     cuit = models.CharField(max_length=13, verbose_name="CUIT", default=0)
 
     def clean(self):
@@ -176,13 +202,21 @@ class Prospec(models.Model):
         return f"{self.razon_social} {self.nombre_fantasia}"
 
 
+
+
 class Rubro(models.Model):
     rubro = models.CharField(max_length=255, verbose_name="Rubro", default=0)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
 
 
 class Subrubro(models.Model):
     subrubro = models.CharField(max_length=255, verbose_name="Subrubro",default=0)
     rubro = models.ForeignKey(Rubro, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
 
 
 class Prospecto(Prospec):
@@ -192,10 +226,18 @@ class Prospecto(Prospec):
     cliente = models.IntegerField(null=True, verbose_name="Cliente")
     rubro = models.ForeignKey(Rubro, on_delete=models.PROTECT, default=1)
     subrubro = models.ForeignKey(Subrubro, on_delete=models.PROTECT, default=1)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 class Proveedor(Prospec):
     proveedor = models.IntegerField(verbose_name="Proveedor", default=0)   
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 class Presupuesto(models.Model):
@@ -211,6 +253,10 @@ class Presupuesto(models.Model):
     fecha_dias_habiles = models.DateField(verbose_name="Fecha días hábiles")
     total_neto = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Total neto")
     cliente = models.ForeignKey(Prospecto, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 class PresupuestoDetalle(models.Model):
@@ -242,6 +288,10 @@ class PresupuestoDetalle(models.Model):
     fecha_ppto_proveedor = models.DateField(verbose_name="Fecha ppto.")
     tipo_de_cambio = models.DecimalField(max_digits=10, decimal_places=2,verbose_name="Tipo de cbio ppto.")
     presupuesto = models.ForeignKey (Presupuesto, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
 
 
 class NotaPedido(models.Model):
@@ -270,6 +320,7 @@ class NotaPedido(models.Model):
     estado = models.CharField(max_length=30,verbose_name="Estado")
     estado_fecha = models.DateField(verbose_name="Fecha de estado")
     estado_usuario = models.CharField(max_length=30, verbose_name="Estado usuario")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     cliente = models.ManyToManyField(Prospecto)
 
 
@@ -315,6 +366,11 @@ class NotaPedidoDetalle(models.Model):
     estado = models.CharField(max_length=13, null=True, verbose_name="Estado")
     estado_fecha = models.CharField(max_length=13, null=True, verbose_name="Estado fecha")
     estado_usuario = models.CharField(max_length=13, null=True, verbose_name="Estado usuario")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+
+
+
 
 class Registracion(models.Model):
     fecha = models.DateField(verbose_name="Fecha de registracion")
