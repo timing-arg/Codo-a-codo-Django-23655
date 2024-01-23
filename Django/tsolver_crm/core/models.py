@@ -14,7 +14,7 @@ CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
 
 class Familia(models.Model):
     idfamilia = models.AutoField(primary_key=True, verbose_name="Código de familia")
-    nombre = models.CharField(max_length=250, null=False, blank=False, unique=True, default='FamiliaDefault', verbose_name="Descripción de la familia")
+    nombre = models.CharField(max_length=250, null=False, blank=False, unique=True, verbose_name="Descripción de la familia")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
 
@@ -22,26 +22,26 @@ class Familia(models.Model):
 
 class Articulo(models.Model):
     idarticulo = models.AutoField(primary_key=True, verbose_name="Código de articulo")
-    articulo_descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, default='ArticuloDefault', verbose_name="Descripción del artículo")
+    articulo_descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, verbose_name="Descripción del artículo")
     vigente = models.BooleanField(default=False)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    familia = models.ForeignKey (Familia, on_delete=models.CASCADE, default=1)    
+    familia = models.ForeignKey (Familia, on_delete=models.CASCADE)    
     
 
 
 
 class Material(models.Model):
     idmaterial = models.AutoField(primary_key=True, verbose_name="Código de material")
-    material = models.CharField(max_length=250, null=False, blank=False, unique=True, default='MaterialDefault', verbose_name="Descripción del material")
+    material = models.CharField(max_length=250, null=False, blank=False, unique=True, verbose_name="Descripción del material")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, default=1)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
 
 
 
 
 class Producto(models.Model):
     codigo_de_producto = models.CharField(primary_key=True, max_length=13, verbose_name="Código de producto")
-    descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, default='ProductoDefault', verbose_name="Descripción del producto")
+    descripcion = models.CharField(max_length=250, null=False, blank=False, unique=True, verbose_name="Descripción del producto")
     formato	= models.CharField(max_length=250, null=True, blank=True, verbose_name="Formato")
     anchoXlongitud	= models.CharField(max_length=250, null=True, blank=False, verbose_name="Ancho x longitud")
     ancho = models.DecimalField(null=True, blank=False, max_digits=5, decimal_places=2, verbose_name="Ancho")
@@ -67,8 +67,8 @@ class Producto(models.Model):
     stockreservado = models.IntegerField(null=True, blank=False, verbose_name="Stock reservado")
     stockdisponible	= models.IntegerField(null=True, blank=False, verbose_name="Stock disponible")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE, default=1)
-    material = models.ForeignKey(Material, on_delete=models.CASCADE, default=1)
+    articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE)
 
 
 

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.fields.related import ManyToManyField
 from django.forms.models import ModelMultipleChoiceField
 from django.http.request import HttpRequest
-from core.models import Producto, Persona, Operador, Domicilio, Telefono, Perfil, Prospec, Rubro, Subrubro, Prospecto, Proveedor, Presupuesto, PresupuestoDetalle, Registracion
+from .models import Producto, Persona, Operador, Domicilio, Telefono, Perfil, Prospec, Rubro, Subrubro, Prospecto, Proveedor, Presupuesto, PresupuestoDetalle, Registracion
 
 
 
@@ -23,11 +23,11 @@ class PersonaAdmin(admin.ModelAdmin):
 
 
 
-#class ProductoAdmin(admin.ModelAdmin):
-#    list_display = ( 'codigo_de_producto', 'descripcion', 'formato', 'existencia')
-#    list_editable = ('descripcion')
-#    list_display_links = ['codigo_de_producto']
-#    search_fields = ['descripcion']
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ( 'codigo_de_producto', 'descripcion', 'precio_de_venta')
+    list_editable = ('descripcion',)
+    list_display_links = ['codigo_de_producto']
+    search_fields = ['descripcion']
 
 
 
@@ -45,7 +45,7 @@ class PersonaAdmin(admin.ModelAdmin):
 
 sitio_admin = TsolverAdminSite(name='administrador')
 sitio_admin.register(Persona, PersonaAdmin)
-#sitio_admin.register(Producto, ProductoAdmin)
+sitio_admin.register(Producto, ProductoAdmin)
 #sitio_admin.register(Operador, OperadorAdmin)
 #sitio_admin.register(Domicilio, DomicilioAdmin)
 #sitio_admin.register(Telefono, TelefonoAdmin)
@@ -63,7 +63,7 @@ sitio_admin.register(Persona, PersonaAdmin)
 #sitio_admin.register(Inscripcion, InscripcionAdmin)
 
 
-#admin.site.register(Estudiante, EstudianteAdmin)
+admin.site.register(Producto, ProductoAdmin)
 #admin.site.register(Docente)
 #admin.site.register(Categoria)
 #admin.site.register(Inscripcion)

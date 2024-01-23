@@ -194,27 +194,27 @@ def crear_producto(request):
                 stockactual=crear_producto_form.cleaned_data['stockactual'],
                 stockreservado=crear_producto_form.cleaned_data['stockreservado'],
                 stockdisponible=crear_producto_form.cleaned_data['stockdisponible'],
-                articulo_id=crear_producto_form.cleaned_data['articulo_id'],
-                material_id=crear_producto_form.cleaned_data['material_id'],
+                articulo=crear_producto_form.cleaned_data['articulo'],
+                material=crear_producto_form.cleaned_data['material'],
             )
 
-            nuevo_producto.save()
+
 
             try:
                 nuevo_producto.save()
 
             except IntegrityError as ie:
                 messages.error(request, "Ocurrió un error al intentar dar de alta al producto")
-                return redirect(reverse("listado_producto"))
+                return redirect(reverse("ver_productos"))
 
             messages.info(request, "Producto dado de alta correctamente")
-            return redirect(reverse("listado_producto"))
+            return redirect(reverse("ver_productos"))
     else:
         crear_producto_form = CrearProductoForm()  # Corregido aquí
 
-    context['crear_producto_form'] = crear_producto_form  # Corregido aquí
+    #context['crear_producto_form'] = crear_producto_form  # Corregido aquí
 
-    return render(request, 'core/crear_producto.html', context)
+    return render(request, 'core/crear_producto.html', {'form':crear_producto_form})
 
 
 

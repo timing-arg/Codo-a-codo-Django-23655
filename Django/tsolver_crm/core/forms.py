@@ -1,7 +1,10 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field
+from .models import Familia, Articulo, Material, Producto
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
-from .models import Familia, Articulo, Material, Producto
+
 import re
 
 CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
@@ -83,7 +86,15 @@ class CrearProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = '__all__'
-
+    def __init__(self, *args, **kwargs):
+        super(CrearProductoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field('codigo_de_producto', css_class='custom-class'),
+            Field('descripcion', rows=4, css_class='custom-class'),
+            Field('tiempo_de_reposicion', min=0),
+            # Agrega más campos según sea necesario
+        )
 class ActualizarStockForm(forms.ModelForm):
     class Meta:
         model = Producto

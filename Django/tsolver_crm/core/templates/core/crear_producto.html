@@ -1,19 +1,31 @@
 {% extends "core/base.html" %}
-{% block title %}Gestión de Stock{% endblock %}
+
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block extra_css%}
     <link rel="stylesheet" href="{% static 'core/css/crear_producto.css' %}">
 {% endblock %}
-{% block header %}
-    <br>
-    <h2>Alta de especialidades</h2> 
-{% endblock %}
+
 
 {% block content %}
-    <h2>Crear producto</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ crear_producto_form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
+    <h3 class="text-center">Formulario de alta de productos</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                {{ form|crispy }}
+ 
+                <input class="btn btn-primary" type="submit" value="Guardar" {% if 'ok' in request.GET %}disabled
+                {% endif %}{% if 'error' in request.GET %}disabled{% endif %}>
+            </form>
+        </div>
+    </div>
+    
+    <hr>
+
+    <div class="d-grid gap-2 col-6 mx-auto mb-5">
+        <a class=btn btn-info btn-lg" href={% url 'index' %}>Volver al Inicio</a>
+    </div>     
 {% endblock %}
