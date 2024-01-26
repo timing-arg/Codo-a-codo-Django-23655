@@ -12,10 +12,14 @@ CUIT_REGEX = r'^\d{2}-\d{8}-\d{1}$'
 # models.ManyToManyField (muchos a muchos)
 # models.OneToOneField (uno a uno)
 
+
 class Familia(models.Model):
     idfamilia = models.AutoField(primary_key=True, verbose_name="Código de familia")
     nombre = models.CharField(max_length=250, null=False, blank=False, unique=True, verbose_name="Descripción de la familia")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nombre  # Reemplaza 'nombre' con el nombre real del campo que quieres mostrar en el combo box
 
 
 
@@ -27,6 +31,8 @@ class Articulo(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     familia = models.ForeignKey (Familia, on_delete=models.CASCADE)    
     
+    def __str__(self):
+        return self.articulo_descripcion  # Reemplaza 'articulo_descripcion' con el nombre real del campo que quieres mostrar en el combo box
 
 
 
@@ -36,6 +42,8 @@ class Material(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.material  # Reemplaza 'nombre' con el nombre real del campo que quieres mostrar en el combo box
 
 
 
@@ -61,7 +69,7 @@ class Producto(models.Model):
     tipo_de_unidad = models.CharField(max_length=10, null=False, blank=True, choices=[("p/millar", "millar"), ("p/unidad", "unidad"), ("precio", "precio")], default="p/millar", verbose_name="Tipo de unidad")
     utilidad = models.IntegerField(null=True, blank=False, verbose_name="Utilidad")
     precio_de_costo = models.DecimalField(null=True, blank=False, max_digits=10, decimal_places=2,verbose_name="Precio de costo")
-    idcliente = models.IntegerField(null=False, blank=False, verbose_name="IdCliente")
+    idcliente = models.IntegerField(null=True, blank=False, verbose_name="IdCliente")
     fecha_ultima_actualizacion = models.DateField(null=True, verbose_name="Fecha de última actualización")
     stockactual = models.IntegerField(null=True, blank=False, verbose_name="Stock actual")
     stockreservado = models.IntegerField(null=True, blank=False, verbose_name="Stock reservado")

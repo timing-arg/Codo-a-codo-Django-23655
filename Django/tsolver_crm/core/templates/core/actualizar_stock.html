@@ -1,15 +1,69 @@
 {% extends "core/base.html" %}
+
 {% block title %}Gestión de Stock{% endblock %}
+
 {% load static %}
+
 {% block extra_css%}
     <link rel="stylesheet" href="{% static 'core/css/actualizar_stock.css' %}">
 {%endblock%}
 
 {% block content %}
-    <h2>Actualizar ahora Stock</h2>
-    <form method="post" action="{% url 'actualizar_stock' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Actualizar Stock</button>
-    </form>
+<h2>Actualizar Stock</h2>
+<form id="actualizarStockForm" method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="submit_buscar" value="Buscar">
+    <input type="submit" name="submit_actualizar" value="Actualizar">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#id_codigo_de_producto').on('change', function () {
+            var codigoProducto = $(this).val();
+            if (codigoProducto) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:8000/tsolver_crm/api/obtener_producto/' + codigoProducto + '/',
+                    success: function (data) {
+                        if (data) {
+                            $('#id_descripcion').val(data.descripcion);
+                            $('#id_stockactual').val(data.stockactual);
+                            $('#id_stockreservado').val(data.stockreservado);
+                            $('#id_stockdisponible').val(data.stockdisponible);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    // Script para actualizar stockdisponible
+    const stockActualField = document.getElementById("id_stockactual");
+    const stockReservadoField = document.getElementById("id_stockreservado");
+    const stockDisponibleField = document.getElementById("id_stockdisponible");
+
+    // Función para actualizar stockdisponible
+    function actualizarStockDisponible() {
+        const stockActual = parseInt(stockActualField.value) || 0;
+        const stockReservado = parseInt(stockReservadoField.value) || 0;
+        const stockDisponible = stockActual - stockReservado;
+
+        // Actualizar el valor del campo stockdisponible
+        stockDisponibleField.value = stockDisponible;
+    }
+
+    // Agregar eventos para llamar a la función cuando cambien stockactual o stockreservado
+    stockActualField.addEventListener("input", actualizarStockDisponible);
+    stockReservadoField.addEventListener("input", actualizarStockDisponible);
+
+    // Llamar a la función al cargar la página
+    actualizarStockDisponible();
+</script>
 {% endblock %}

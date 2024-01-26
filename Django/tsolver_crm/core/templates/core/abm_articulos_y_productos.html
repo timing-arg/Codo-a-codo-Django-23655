@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}abm de articulos y productos{% endblock %}
+
+
+{% block extra_css%}
+    <link rel="stylesheet" href="{% static 'core/css/abm_articulos_y_productos.css' %}">
+{%endblock%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Producto</title>
+    <!-- Agrega enlaces a los archivos Bootstrap CSS aquí -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta2/css/bootstrap.min.css" integrity="sha384-pzjw8C+1UqBL5o5lHOIjj9XWep5LDBQpfk0cPiLAscaVor+nSI1Bn2aXerRE" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Seleccionar Producto</h2>
+    <form method="post" id="seleccionarProductoForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+    
+        <!-- Script para manejar eventos de cambio en el campo Familia -->
+        <script>
+            document.getElementById('{{ form.familia.id_for_label }}').addEventListener('change', function() {
+                var familiaId = this.value;
+                if (familiaId) {
+                    // Realizar solicitud Ajax para cargar opciones de Articulo basadas en la Familia seleccionada
+                    fetch(`/cargar_opciones_articulos?familia_id=${familiaId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);  // Agrega esta línea para imprimir en la consola del navegador
+                            // Actualizar las opciones del campo Articulo
+                            var selectArticulo = document.getElementById('{{ form.articulo.id_for_label }}');
+                            selectArticulo.innerHTML = '<option value="">---------</option>';
+                            data.opciones.forEach(opcion => {
+                                var option = document.createElement('option');
+                                option.value = opcion.id;
+                                option.text = opcion.descripcion;
+                                selectArticulo.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error(error));  // Agrega esta línea para imprimir errores
+                }
+            });
+            
+        </script>
+    </form>
+    
+</div>
+
+<!-- Agrega enlaces a los archivos Bootstrap JS y Popper.js aquí -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-eMNCOeEdP0ycR0/4ZMXntnYsGrQpiFu0DHvJrntpuoiUtmz8y/z2KLFrFtEwZxcn" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta2/js/bootstrap.min.js" integrity="sha384-pzjw8C+1UqBL5o5lHOIjj9XWep5LDBQpfk0cPiLAscaVor+nSI1Bn2aXerRE" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
+{% endblock %}

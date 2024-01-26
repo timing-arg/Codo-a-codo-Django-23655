@@ -2,7 +2,7 @@ from django.urls import path, re_path, include
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from . import views
-from .views import actualizar_stock  # Ajusta la importación según tu estructura de carpetas
+from .views import actualizar_stock, obtener_producto, seleccionar_producto, cargar_opciones_articulos  # Ajusta la importación según tu estructura de carpetas
 
 router = DefaultRouter()
 router.register(r'Persona', views.PersonaViewSet, basename='Persona')
@@ -23,16 +23,22 @@ urlpatterns = [
     re_path(r'prospectos/historico/(?P<year>[0-9]{4})/$', views.prospectos_historico, name='prospectos_historico'),
     path('prospectos/activos', views.prospectos_estado, {'estado': 'activo'}, name="prospectos_activos"),
     path('prospectos/inactivos', views.prospectos_estado, {'estado': 'inactivo'}, name="prospectos_inactivos"),
-    path('gestion/stock', views.gestion_de_stock, name="gestion_de_stock"),
-
+    
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
     path('actualizar_stock/', actualizar_stock, name='actualizar_stock'),
     #----productos--------------------------------------------------------------------------------------------------
+    path('api/obtener_producto/<str:codigo_de_producto>/', obtener_producto, name='obtener_producto'),
     path('crear_producto/',views.crear_producto, name='crear_producto'),
     path('editar_producto/<str:codigo_de_producto>/', views.editar_producto, name='editar_producto'),
+    path('actualizar_producto/<str:codigo_de_producto>/',views.actualizar_producto, name='actualizar_producto'),
     path('eliminar_producto/<str:codigo_de_producto>/',views.eliminar_producto, name='eliminar_producto'),
-    path('seleccionar_producto/',views.seleccionar_producto, name='seleccionar_producto'),
     path('ver_productos/', views.ver_productos, name='ver_productos'),
+    #----Buscador de productos--------------------------------------------------------------------------------------------------
+    path('seleccionar_producto/',views.seleccionar_producto, name='seleccionar_producto'),
+    path('cargar_opciones_articulos/', views.cargar_opciones_articulos, name='cargar_opciones_articulos'),
+    #----gestión de stock-------------------------------------------------------------------------------------------
+    path('actualizar_stock/',views.actualizar_stock, name='actualizar_stock'),
+    path('gestion_de_stock/',views.gestion_de_stock, name='gestion_de_stock'),
 
 
 

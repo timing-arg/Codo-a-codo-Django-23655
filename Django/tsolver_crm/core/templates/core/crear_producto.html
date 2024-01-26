@@ -15,7 +15,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
 
-                {{ form|crispy }}
+                {{ form }}
  
                 <input class="btn btn-primary" type="submit" value="Guardar" {% if 'ok' in request.GET %}disabled
                 {% endif %}{% if 'error' in request.GET %}disabled{% endif %}>
@@ -26,6 +26,6 @@
     <hr>
 
     <div class="d-grid gap-2 col-6 mx-auto mb-5">
-        <a class=btn btn-info btn-lg" href={% url 'index' %}>Volver al Inicio</a>
+        <a class="btn btn-info btn-lg" href={% url 'index' %}>Volver al Inicio</a>
     </div>     
 {% endblock %}
